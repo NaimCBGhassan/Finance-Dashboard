@@ -54,7 +54,7 @@ const KPISchema = new Schema(
       },
     },
     monthlyData: [monthSchema],
-    dailyData: [],
+    dailyData: [dailySchema],
   },
   {
     timestamps: true,
