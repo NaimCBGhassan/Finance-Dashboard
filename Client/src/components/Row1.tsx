@@ -15,12 +15,12 @@ import {
 import { useGetKpisQuery } from "@/store/api";
 import DashboardBox from "./DashboardBox";
 import { useMemo } from "react";
-import { useTheme } from "@mui/material";
+import { useTheme, CircularProgress, Box, Typography } from "@mui/material";
 import BoxHeader from "./BoxHeader";
 
 const Row1 = () => {
   const { palette } = useTheme();
-  const { data, isLoading } = useGetKpisQuery();
+  const { data, isLoading, isError } = useGetKpisQuery();
 
   const newData = useMemo(() => {
     return (
@@ -93,8 +93,14 @@ const Row1 = () => {
                 fill="url(#colorExpenses)"
               />
             </AreaChart>
+          ) : !isError ? (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <CircularProgress />
+            </Box>
           ) : (
-            <p>Is loading...</p>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Typography variant="h3">Server Error</Typography>
+            </Box>
           )}
         </ResponsiveContainer>
       </DashboardBox>
@@ -131,8 +137,14 @@ const Row1 = () => {
               <Line yAxisId="left" dot={false} type="monotone" dataKey="profit" stroke={palette.tertiary[500]} />
               <Line yAxisId="right" dot={false} type="monotone" dataKey="revenue" stroke={palette.primary.main} />
             </LineChart>
+          ) : !isError ? (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <CircularProgress />
+            </Box>
           ) : (
-            <p>Is loading...</p>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Typography variant="h3">Server Error</Typography>
+            </Box>
           )}
         </ResponsiveContainer>
       </DashboardBox>
@@ -144,27 +156,37 @@ const Row1 = () => {
           height="20%"
         />
         <ResponsiveContainer width="100%" height="80%">
-          <BarChart
-            data={newData}
-            margin={{
-              top: 17,
-              right: 25,
-              left: -5,
-              bottom: 5,
-            }}
-          >
-            <defs>
-              <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.8} />
-                <stop offset="95%" stopColor={palette.primary[300]} stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid vertical={false} stroke={palette.grey[800]} />
-            <XAxis dataKey="month" tickLine={false} axisLine={false} style={{ fontSize: "10px" }} />
-            <YAxis tickLine={false} axisLine={false} style={{ fontSize: "10px" }} />
-            <Tooltip />
-            <Bar dataKey="revenue" fill="url(#colorRevenue)" />
-          </BarChart>
+          {newData && !isLoading ? (
+            <BarChart
+              data={newData}
+              margin={{
+                top: 17,
+                right: 25,
+                left: -5,
+                bottom: 5,
+              }}
+            >
+              <defs>
+                <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.8} />
+                  <stop offset="95%" stopColor={palette.primary[300]} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid vertical={false} stroke={palette.grey[800]} />
+              <XAxis dataKey="month" tickLine={false} axisLine={false} style={{ fontSize: "10px" }} />
+              <YAxis tickLine={false} axisLine={false} style={{ fontSize: "10px" }} />
+              <Tooltip />
+              <Bar dataKey="revenue" fill="url(#colorRevenue)" />
+            </BarChart>
+          ) : !isError ? (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Typography variant="h3">Server Error</Typography>
+            </Box>
+          )}
         </ResponsiveContainer>
       </DashboardBox>
     </>
