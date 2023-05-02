@@ -59,12 +59,11 @@ Overall, this project provides a comprehensive solution for businesses looking t
 <hr/>
 <h2 id="Technologies">Used technologies</h2>
 
+### FrontEnd
+
 <ul >
   <li>TypeScript</li>
   <li>React</li>
-  <li>NodeJs</li>
-  <li>ExpressJs</li>
-  <li>MongoDB</li>
   <li>Redux Toolkit</li>
   <li>Redux Toolkit Query</li>
   <li>Recharts</li>
@@ -72,4 +71,18 @@ Overall, this project provides a comprehensive solution for businesses looking t
   <li>RegressionJS</li>
   <li>Material UI</li>
   <li>ViteJS</li>
+</ul>
+
+### BackEnd
+
+<ul >
+  <li>NodeJs</li>
+  <li>ExpressJs</li>
+  <li>MongoDB</li>
+  <li>Mongoose</li>
+  <li>Helmet</li>
+  <li>Cors</li>
+  <li>Dotenv</li>
+  <li>Morgan</li>
+  <li>BodyParser</li>
 </ul>
