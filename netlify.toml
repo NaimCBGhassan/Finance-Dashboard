@@ -1,0 +1,22 @@
+[[redirects]]
+  from = "https://financedashboardnc.netlify.app/product/*"
+  to = "https://onlineshop-project.up.railway.app/product/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://financedashboardnc.netlify.app/kpi/*"
+  to = "https://onlineshop-project.up.railway.app/kpi/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://financedashboardnc.netlify.app/transaction/*"
+  to = "https://onlineshop-project.up.railway.app/transaction/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
