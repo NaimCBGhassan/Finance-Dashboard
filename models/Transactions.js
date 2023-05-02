@@ -3,8 +3,7 @@ import { Schema, model } from "mongoose";
 const TransactionSchema = new Schema(
   {
     buyer: {
-      type: Number,
-      currency: "U$D",
+      type: String,
     },
     amount: {
       type: Number,
