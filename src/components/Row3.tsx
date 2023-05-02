@@ -2,7 +2,7 @@ import { useGetKpisQuery, useGetProductsQuery, useGetTransactionsQuery } from "@
 import DashboardBox from "./DashboardBox";
 import { useMemo } from "react";
 import BoxHeader from "./BoxHeader";
-import { Box, useTheme, Typography } from "@mui/material";
+import { Box, useTheme, Typography, CircularProgress } from "@mui/material";
 import { GridCellParams, DataGrid } from "@mui/x-data-grid";
 import FlexBetween from "./FlexBetween";
 import { Cell, Pie, PieChart } from "recharts";
@@ -11,7 +11,7 @@ const Row3 = () => {
   const { palette } = useTheme();
   const pieColors = [palette.primary[800], palette.primary[300]];
 
-  const { data: kpisData } = useGetKpisQuery();
+  const { data: kpisData, isError } = useGetKpisQuery();
   const { data: productsData, isLoading: loadingProducts } = useGetProductsQuery();
   const { data: transactionsData, isLoading: loadingTransactions } = useGetTransactionsQuery();
 
@@ -127,20 +127,30 @@ const Row3 = () => {
       <DashboardBox gridArea="i">
         <BoxHeader title="Expense Breakdown By Category" sideText="+10%" height="25%" />
 
-        <FlexBetween gap="0.5rem" p="0.5rem 1rem" height="75%" textAlign="center">
-          {newKpisData?.map((data, i) => (
-            <Box key={`${data[0].name}-${i}`}>
-              <PieChart width={110} height={100}>
-                <Pie stroke="none" data={data} innerRadius={18} outerRadius={38} paddingAngle={2} dataKey="value">
-                  {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={pieColors[index]} />
-                  ))}
-                </Pie>
-              </PieChart>
-              <Typography variant="h5">{data[0].name}</Typography>
-            </Box>
-          ))}
-        </FlexBetween>
+        {newKpisData && !loadingProducts ? (
+          <FlexBetween gap="0.5rem" p="0.5rem 1rem" height="75%" textAlign="center">
+            {newKpisData?.map((data, i) => (
+              <Box key={`${data[0].name}-${i}`}>
+                <PieChart width={110} height={100}>
+                  <Pie stroke="none" data={data} innerRadius={18} outerRadius={38} paddingAngle={2} dataKey="value">
+                    {data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={pieColors[index]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+                <Typography variant="h5">{data[0].name}</Typography>
+              </Box>
+            ))}
+          </FlexBetween>
+        ) : !isError ? (
+          <Box height="85%" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Box height="85%" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Typography variant="h3">Server Error</Typography>
+          </Box>
+        )}
       </DashboardBox>
       <DashboardBox gridArea="j">
         <BoxHeader title="Overall Summary and Explanation Data" sideText="+15%" height="25%" />

@@ -1,6 +1,6 @@
 import { useGetKpisQuery, useGetProductsQuery } from "@/store/api";
 import { useMemo } from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
 import DashboardBox from "./DashboardBox";
 import BoxHeader from "./BoxHeader";
 import {
@@ -30,7 +30,7 @@ const Row2 = () => {
   const { palette } = useTheme();
   const pieColors = [palette.primary[800], palette.primary[300]];
   const { data: kpisData, isLoading: loadingKpis } = useGetKpisQuery();
-  const { data: productsData, isLoading: loadingProducts } = useGetProductsQuery();
+  const { data: productsData, isLoading: loadingProducts, isError } = useGetProductsQuery();
 
   const newKpisData = useMemo(() => {
     if (kpisData) {
@@ -97,8 +97,14 @@ const Row2 = () => {
                 stroke={palette.primary.main}
               />
             </LineChart>
+          ) : !isError ? (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <CircularProgress />
+            </Box>
           ) : (
-            <p>Is loading...</p>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Typography variant="h3">Server Error</Typography>
+            </Box>
           )}
         </ResponsiveContainer>
       </DashboardBox>
@@ -165,8 +171,14 @@ const Row2 = () => {
               <Scatter name="Product Expense Ratio" data={newProductsData} fill={palette.tertiary[500]} />
             </ScatterChart>
           </ResponsiveContainer>
+        ) : !isError ? (
+          <Box height="85%" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <CircularProgress />
+          </Box>
         ) : (
-          <p>Is Loading...</p>
+          <Box height="85%" sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Typography variant="h3">Server Error</Typography>
+          </Box>
         )}
       </DashboardBox>
     </>
