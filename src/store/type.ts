@@ -39,8 +39,21 @@ export interface GetProductsResponse {
   _id: string;
   __v: number;
   price: number;
-  expenses: number;
+  expense: number;
   transactionIds: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+// TRANSACTIONS
+
+export interface GetTransactionsResponse {
+  id: string;
+  _id: string;
+  __v: number;
+  buyer: string;
+  amount: number;
+  productIds: string[];
   createdAt: string;
   updatedAt: string;
 }

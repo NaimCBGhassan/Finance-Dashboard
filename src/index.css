@@ -4,7 +4,7 @@ html,
 body,
 #root,
 .app {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   font-family: "Inter", sans-serif;
   background-color: #1f2026;
@@ -12,4 +12,17 @@ body,
 
 a {
   text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical {
+  width: 0.4rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 5px;
 }
